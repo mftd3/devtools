@@ -89,18 +89,25 @@ function parse($arg)
     ];
 }
 
+
 function dd(...$args)
 {
     global $objects;
 
-    $result = parse(...$args);
+    $js = file_get_contents(__DIR__ . '/../dist/assets/index.js');
+    $css = file_get_contents(__DIR__ . '/../dist/assets/index.css');
+    $html = file_get_contents(__DIR__ . '/../dist/index.html');
 
+    $result = parse(...$args);
     ksort($objects);
 
-    echo json_encode(['objects' => $objects, 'dump' => $result], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    $html = str_replace(['{{js}}', '{{css}}', '{{dump}}'], [$js, $css, json_encode(['dump' => $result, 'objects' => $objects])], $html);
+    echo $html;
+    die;
 }
 
-function cors() {
+function cors()
+{
 
     // Allow from any origin
     if (isset($_SERVER['HTTP_ORIGIN'])) {
@@ -123,7 +130,6 @@ function cors() {
 
         exit(0);
     }
-
 }
 
 cors();

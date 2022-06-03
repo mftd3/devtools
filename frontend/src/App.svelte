@@ -1,32 +1,31 @@
 <script>
   import DataField from "./inspector/DataField.svelte";
+  import StateInspector from "./inspector/StateInspector.svelte";
+  import StateType from "./inspector/StateType.svelte";
+  import SplitPane from "./layout/SplitPane.svelte";
 
-  let loaded = false;
-  let dump = {};
-  let objects = {};
-
-  fetch("http://mf.test")
-    .then((r) => r.json())
-    .then((data) => {
-      dump = data.dump;
-      objects = data.objects;
-      loaded = true;
-    });
+  export let dump = {};
+  export let objects = {};
 </script>
 
-{#if loaded}
-  <DataField obj={dump} {objects} />
-{/if}
+<div class="wrapper">
+  <SplitPane>
+    <div slot="left">123</div>
+    <StateInspector slot="right">
+      <StateType>
+        <DataField obj={dump} {objects} />
+      </StateType>
+    </StateInspector>
+  </SplitPane>
+</div>
 
 <style>
-  :global(body) {
-    margin: 0;
-    font-size: 14px;
-    font-family: "Roboto Mono", Menlo, Consolas, Monaco, Liberation Mono,
-      Lucida Console, monospace;
-    /* -webkit-font-smoothing: antialiased; */
-  }
-  :global(a) {
-    text-decoration: none;
+  .wrapper {
+    height: 400px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #ccc;
   }
 </style>
