@@ -1,0 +1,14 @@
+{
+  "name": "mftd/mftd-devtools",
+  "version": "1.0.0",
+  "type": "library",
+  "require": {
+    "php": ">=8.1"
+  },
+  "autoload": {
+    "files": [
+      "src/functions.php"
+    ]
+  },
+  "minimum-stability": "dev"
+}
