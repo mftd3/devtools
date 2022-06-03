@@ -7,3 +7,4 @@
 npm-debug.log
 /tests/phpunit.tmp
 /frontend/node_modules
+.DS_Store
