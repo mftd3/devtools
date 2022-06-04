@@ -9,6 +9,7 @@
     ref = objects[obj.value];
   }
 
+  console.log(ref);
   let opened = false;
 
   function toggle() {
@@ -92,7 +93,8 @@
   .key {
     color: #8128e8;
   }
-  .value-integer {
+  .value-integer,
+  .value-double {
     color: rgb(0, 51, 204);
   }
   .value-boolean {

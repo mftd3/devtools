@@ -4,20 +4,33 @@
   import StateType from "./inspector/StateType.svelte";
   import SplitPane from "./layout/SplitPane.svelte";
 
-  export let dump = {};
-  export let objects = {};
+  let dump = {};
+  let objects = {};
+  let loaded = false;
+
+  fetch("http://localhost:8080")
+    .then((r) => r.json())
+    .then((d) => {
+      console.log(d);
+      dump = d.dump;
+      objects = d.objects;
+      console.log(objects);
+      loaded = true;
+    });
 </script>
 
-<div class="wrapper">
-  <SplitPane>
-    <div slot="left">123</div>
-    <StateInspector slot="right">
-      <StateType>
-        <DataField obj={dump} {objects} />
-      </StateType>
-    </StateInspector>
-  </SplitPane>
-</div>
+{#if loaded}
+  <div class="wrapper">
+    <SplitPane>
+      <div slot="left">123</div>
+      <StateInspector slot="right">
+        <StateType>
+          <DataField obj={dump} {objects} />
+        </StateType>
+      </StateInspector>
+    </SplitPane>
+  </div>
+{/if}
 
 <style>
   .wrapper {

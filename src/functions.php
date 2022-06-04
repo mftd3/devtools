@@ -94,17 +94,19 @@ function dd(...$args)
 {
     global $objects;
 
-    $js = file_get_contents(__DIR__ . '/../dist/assets/index.js');
-    $css = file_get_contents(__DIR__ . '/../dist/assets/index.css');
-    $html = file_get_contents(__DIR__ . '/../dist/index.html');
-
     $result = parse(...$args);
-    ksort($objects);
 
-    $html = str_replace(['{{js}}', '{{css}}', '{{dump}}'], [$js, $css, json_encode(['dump' => $result, 'objects' => $objects])], $html);
-    echo $html;
+    if ($objects) {
+        ksort($objects);
+    }
+
+    echo json_encode([
+        'dump' => $result,
+        'objects' => $objects
+    ]);
     die;
 }
+
 
 function cors()
 {
